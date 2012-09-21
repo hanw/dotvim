@@ -143,8 +143,8 @@ nnoremap <leader>eb :vs ~/.bashrc<CR>
 
 "colors
 set t_Co=256
-colorscheme vividchalk
-" colorscheme molokai
+"colorscheme vividchalk
+colorscheme molokai
 "colorscheme morning
 "colorscheme mustang
 "other stuff
@@ -292,7 +292,7 @@ map ,, <leader><leader>
 "This plugin is mapped to ,ff to format the current javascript file
 
 "Vim-Powerline
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
 set encoding=utf-8 " Necessary to show unicode glyphs
 
 "Rename
