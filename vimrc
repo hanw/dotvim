@@ -20,7 +20,7 @@ map <silent> <m-n> :cn <cr>
 syntax enable
 
 set cf  " Enable error files & error jumping.
-set clipboard=unnamed  " Yanks go on clipboard instead.
+set clipboard+=unnamed  " Yanks go on clipboard instead.
 set history=256  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
 set autoread  " reloads upon file change
@@ -122,6 +122,12 @@ if has("gui_macvim")
   au WinEnter * set cursorline
   set cursorline
 endif
+
+"format all Tabs
+nnoremap == ggvGb
+
+"So we can split a line somewhere
+nmap NL i<Return><ESC>
 
 " Sudo to write
 cnoremap w!! w !sudo tee % >/dev/null
@@ -336,3 +342,8 @@ highlight clear SignColumn
 set tabstop=4
 set shiftwidth=4
 
+" syntastic
+let g:syntastic_enable_highlighting = 0
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
