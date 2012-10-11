@@ -29,7 +29,8 @@ set history=256  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
-set nowrap  " Line wrapping off
+set wrap  " Line wrapping off
+set tw=80 " Set text width
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Formatting
@@ -128,8 +129,11 @@ nnoremap <leader>eb :vs ~/.bashrc<CR>
 
 "colors
 set t_Co=256
-colorscheme vividchalk
-" colorscheme molokai
+"colorscheme vividchalk
+"colorscheme molokai
+"colorscheme ir_black
+"colorscheme peaksea
+colorscheme fruity
 "colorscheme morning
 "colorscheme mustang
 "other stuff
@@ -286,7 +290,7 @@ map ,, <leader><leader>
 "This plugin is mapped to ,ff to format the current javascript file
 
 "Vim-Powerline
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
 set encoding=utf-8 " Necessary to show unicode glyphs
 
 "Rename
