@@ -130,10 +130,10 @@ nnoremap <leader>eb :vs ~/.bashrc<CR>
 "colors
 set t_Co=256
 "colorscheme vividchalk
-"colorscheme molokai
+colorscheme molokai
 "colorscheme ir_black
 "colorscheme peaksea
-colorscheme fruity
+"colorscheme fruity
 "colorscheme morning
 "colorscheme mustang
 "other stuff
@@ -310,3 +310,4 @@ let g:syntastic_enable_highlighting = 0
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
