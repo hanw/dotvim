@@ -1,6 +1,7 @@
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
-filetype on  " Automatically detect file types.  set nocompatible  " no vi compatibility.
+filetype on  " Automatically detect file types. 
+set nocompatible  " no vi compatibility.
 
 " Add recently accessed projects menu (project plugin)
 set viminfo^=\!
@@ -29,21 +30,23 @@ set history=256  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
-set wrap  " Line wrapping off
-set tw=80 " Set text width
+"set wrap  " Line wrapping off
+"set tw=80 " Set text width
+set cc=85
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Formatting
-set ts=2  " Tabs are 2 spaces
+set ts=4  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
+set shiftwidth=4  " Tabs under smart indent
+set softtabstop=4  " 
 set nocp incsearch
 set cinoptions=:0,p0,t0
 set cinwords=if,else,while,do,for,switch,case
 set formatoptions=tcqr
 set cindent
 set autoindent
-set smarttab
+"set smarttab
 set expandtab
 
 " Visual
@@ -51,7 +54,7 @@ set showmatch  " Show matching brackets.
 set mat=5  " Bracket blinking.
 set list
 " Show $ at end of line and trailing space as ~
-set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
+set lcs=eol:$,tab:\ \ ,trail:~,extends:>,precedes:<
 set novisualbell  " No blinking .
 set noerrorbells  " No noise.
 set laststatus=2  " Always show status line.
@@ -74,10 +77,10 @@ map ; :
 "to keep original semicolon functionality:
 noremap ;; ;
 "escape is hard to reach so map kj to <ESC>
-noremap kj <ESC>
-inoremap kj <ESC>l
+"noremap kj <ESC>
+"inoremap kj <ESC>l
 " nnoremap kj <ESC>
-vnoremap kj <ESC>
+"vnoremap kj <ESC>
 
 "scroll up and down faster with J and K
 noremap K 5k
@@ -305,9 +308,4 @@ if has("gui_running")
   set guifont=Monaco\ for\ Powerline:h13
 endif
 
-" syntastic
-let g:syntastic_enable_highlighting = 0
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
+autocmd Filetype python setlocal et ts=2 bs=2 sw=2 softtabstop=2
