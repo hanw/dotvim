@@ -39,7 +39,7 @@ set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 set ts=4  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
 set shiftwidth=4  " Tabs under smart indent
-set softtabstop=4  " 
+set softtabstop=4  "
 set nocp incsearch
 set cinoptions=:0,p0,t0
 set cinwords=if,else,while,do,for,switch,case
@@ -61,13 +61,13 @@ set laststatus=2  " Always show status line.
 
 " gvim specific
 set mousehide  " Hide mouse after chars typed
-set mouse=a  " Mouse in all modesc
+"set mouse=a  " Mouse in all modesc
 set antialias
 
 "Personal Customizations
 "map cap h and cap l to beg and end of line=more intuitive
-noremap H ^
-noremap L $
+nnoremap H ^
+nnoremap L $
 noremap HH H
 noremap LL L
 "mm to go to matching
@@ -157,10 +157,10 @@ set pastetoggle=<F2> "F2 toggles paste in insert mode too
 set showmode "show the change to the user
 set shortmess=a
 "folding settings
-set foldmethod=indent   "fold based on indent
-set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what I use
+"set foldmethod=indent   "fold based on indent
+"set foldnestmax=10      "deepest fold is 10 levels
+"set nofoldenable        "dont fold by default
+"set foldlevel=1         "this is just what I use
 
 "Relative Line Numbering
 " function! NumberToggle()
@@ -309,3 +309,17 @@ if has("gui_running")
 endif
 
 autocmd Filetype python setlocal et ts=2 bs=2 sw=2 softtabstop=2
+" syntastic
+let g:syntastic_enable_highlighting = 0
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+>>>>>>> 296b5d9a22fdeb2ea9cae1e2d6717a1221d20553
