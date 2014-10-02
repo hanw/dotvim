@@ -1,6 +1,7 @@
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype on  " Automatically detect file types.  set nocompatible  " no vi compatibility.
+
 " Add recently accessed projects menu (project plugin)
 set viminfo^=\!
 
@@ -26,21 +27,23 @@ set autowrite  " Writes on make/shell commands
 set autoread  " reloads upon file change
 set ruler  " Ruler on
 set nu  " Line numbers on
-set wrap  " Line wrapping off
-set tw=80 " Set text width
+"set wrap  " Line wrapping off
+"set tw=80 " Set text width
+set cc=85
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Formatting
-set ts=2  " Tabs are 2 spaces
+set ts=4  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set incsearch
+set shiftwidth=4  " Tabs under smart indent
+set softtabstop=4  "
+set nocp incsearch
 set cinoptions=:0,p0,t0
 set cinwords=if,else,while,do,for,switch,case
 set formatoptions=tcqr
 set cindent
 set autoindent
-set smarttab
+"set smarttab
 set expandtab
 
 " Visual
@@ -48,7 +51,7 @@ set showmatch  " Show matching brackets.
 set mat=5  " Bracket blinking.
 set list
 " Show $ at end of line and trailing space as ~
-set lcs=tab:\ \ ,eol:$,trail:~,extends:>,precedes:<
+set lcs=eol:$,tab:\ \ ,trail:~,extends:>,precedes:<
 set novisualbell  " No blinking .
 set noerrorbells  " No noise.
 set noeb vb t_vb=
@@ -56,7 +59,7 @@ set laststatus=2  " Always show status line.
 
 " gvim specific
 set mousehide  " Hide mouse after chars typed
-set mouse=a  " Mouse in all modesc
+"set mouse=a  " Mouse in all modesc
 set antialias
 
 "Personal Customizations
@@ -81,11 +84,10 @@ vmap gy ygvgcp
 nmap gyy yyPgccj
 
 "map cap h and cap l to beg and end of line=more intuitive
-noremap H ^
-noremap L $
-vnoremap L g_
-noremap <leader>H H
-noremap <leader>L L
+nnoremap H ^
+nnoremap L $
+noremap HH H
+noremap LL L
 "mm to go to matching
 map m %
 noremap <leader>mm m
@@ -100,9 +102,10 @@ map :qqq :q!<CR>
 "to keep original semicolon functionality:
 noremap ;; ;
 "escape is hard to reach so map kj to <ESC>
-inoremap kj <ESC>l
+"noremap kj <ESC>
+"inoremap kj <ESC>l
 " nnoremap kj <ESC>
-vnoremap kj <ESC>
+"vnoremap kj <ESC>
 
 "scroll up and down faster with J and K
 noremap K 5k
@@ -151,14 +154,10 @@ nnoremap <leader>eb :vs ~/.bashrc<CR>
 "colors
 set t_Co=256
 "colorscheme vividchalk
-<<<<<<< HEAD
 colorscheme molokai
-=======
-"colorscheme molokai
 "colorscheme ir_black
 "colorscheme peaksea
-colorscheme fruity
->>>>>>> add color file
+"colorscheme fruity
 "colorscheme morning
 "colorscheme mustang
 "other stuff
@@ -179,10 +178,10 @@ set pastetoggle=<F2> "F2 toggles paste in insert mode too
 set showmode "show the change to the user
 set shortmess=a
 "folding settings
-set foldmethod=indent   "fold based on indent
-set foldnestmax=10      "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
-set foldlevel=1         "this is just what I use
+"set foldmethod=indent   "fold based on indent
+"set foldnestmax=10      "deepest fold is 10 levels
+"set nofoldenable        "dont fold by default
+"set foldlevel=1         "this is just what I use
 
 "Relative Line Numbering
 " function! NumberToggle()
@@ -327,6 +326,7 @@ if has("gui_running")
     set guioptions=egmrt
 endif
 
+<<<<<<< HEAD
 "NarrowRegion
 map :narrow<CR> :NarrowRegion<CR>
 
@@ -350,8 +350,16 @@ highlight clear SignColumn
 set tabstop=4
 set shiftwidth=4
 
+autocmd Filetype python setlocal et ts=2 bs=2 sw=2 softtabstop=2
 " syntastic
 let g:syntastic_enable_highlighting = 0
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
