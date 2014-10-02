@@ -26,7 +26,8 @@ set autowrite  " Writes on make/shell commands
 set autoread  " reloads upon file change
 set ruler  " Ruler on
 set nu  " Line numbers on
-set nowrap  " Line wrapping off
+set wrap  " Line wrapping off
+set tw=80 " Set text width
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
 " Formatting
@@ -150,7 +151,14 @@ nnoremap <leader>eb :vs ~/.bashrc<CR>
 "colors
 set t_Co=256
 "colorscheme vividchalk
+<<<<<<< HEAD
 colorscheme molokai
+=======
+"colorscheme molokai
+"colorscheme ir_black
+"colorscheme peaksea
+colorscheme fruity
+>>>>>>> add color file
 "colorscheme morning
 "colorscheme mustang
 "other stuff
