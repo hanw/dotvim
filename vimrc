@@ -326,7 +326,6 @@ if has("gui_running")
     set guioptions=egmrt
 endif
 
-<<<<<<< HEAD
 "NarrowRegion
 map :narrow<CR> :NarrowRegion<CR>
 
