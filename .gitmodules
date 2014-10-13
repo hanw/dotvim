@@ -88,9 +88,6 @@
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = git@github.com:kien/ctrlp.vim.git
-[submodule "bundle/camelcasemotion"]
-	path = bundle/camelcasemotion
-	url = git@github.com:vim-scripts/camelcasemotion.git
 [submodule "bundle/rainbow_parenthesis"]
 	path = bundle/rainbow_parenthesis
 	url = git@github.com:kien/rainbow_parentheses.vim.git
