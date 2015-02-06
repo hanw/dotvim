@@ -112,3 +112,6 @@
 [submodule "bundle/vim-seek"]
 	path = bundle/vim-seek
 	url = git@github.com:goldfeld/vim-seek.git
+[submodule "bundle/syntax"]
+	path = bundle/syntax
+	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
