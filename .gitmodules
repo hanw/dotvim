@@ -28,9 +28,6 @@
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "bundle/LustyJugggler"]
-	path = bundle/LustyJugggler
-	url = https://github.com/vim-scripts/LustyJuggler.git
 [submodule "bundle/easymotion"]
 	path = bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
@@ -46,9 +43,6 @@
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
-[submodule "bundle/vim-matchit"]
-	path = bundle/vim-matchit
-	url = https://github.com/tsaleh/vim-matchit.git
 [submodule "bundle/rename"]
 	path = bundle/rename
 	url = https://github.com/danro/rename.vim.git
