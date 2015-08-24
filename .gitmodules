@@ -4,12 +4,6 @@
 [submodule "bundle/lusty"]
 	path = bundle/lusty
 	url = https://github.com/sjbach/lusty.git
-[submodule "bundle/vim-rails"]
-	path = bundle/vim-rails
-	url = https://github.com/tpope/vim-rails.git
-[submodule "bundle/vim-ruby"]
-	path = bundle/vim-ruby
-	url = https://github.com/vim-ruby/vim-ruby.git
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
@@ -46,9 +40,6 @@
 [submodule "bundle/vim-syntaxHilight-ejs-jst"]
 	path = bundle/vim-syntaxHilight-ejs-jst
 	url = https://github.com/briancollins/vim-jst
-[submodule "bundle/vim-javascript"]
-	path = bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
 [submodule "bundle/vim-indent-guides"]
 	path = bundle/vim-indent-guides
 	url = https://github.com/nathanaelkane/vim-indent-guides.git
@@ -73,9 +64,6 @@
 [submodule "bundle/greplace"]
 	path = bundle/greplace
 	url = https://github.com/vim-scripts/greplace.vim.git
-[submodule "bundle/vim-jst"]
-	path = bundle/vim-jst
-	url = https://github.com/briancollins/vim-jst.git
 [submodule "bundle/vim-golang"]
 	path = bundle/vim-golang
 	url = git@github.com:hanw/go-vim.git
