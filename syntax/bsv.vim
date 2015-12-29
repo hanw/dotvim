@@ -163,6 +163,7 @@ syntax keyword bsv_statement not
 syntax keyword bsv_statement notif0
 syntax keyword bsv_statement notif1
 syntax keyword bsv_statement null
+syntax keyword bsv_statement numeric
 syntax keyword bsv_statement or
 syntax keyword bsv_statement output
 syntax keyword bsv_statement package

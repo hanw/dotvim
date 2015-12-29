@@ -115,3 +115,9 @@
 [submodule "bundle/syntax"]
 	path = bundle/syntax
 	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "vim-visual-increment"]
+	path = vim-visual-increment
+	url = git@github.com:triglav/vim-visual-increment.git
+[submodule "increment.vim--Natter"]
+	path = increment.vim--Natter
+	url = git@github.com:vim-scripts/increment.vim--Natter.git
