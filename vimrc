@@ -44,7 +44,7 @@ set formatoptions=tcqr
 set cindent
 set autoindent
 "set smarttab
-set expandtab
+"set expandtab
 
 " Visual
 set showmatch  " Show matching brackets.
@@ -101,12 +101,6 @@ map ; :
 map :qqq :q!<CR>
 "to keep original semicolon functionality:
 noremap ;; ;
-"escape is hard to reach so map kj to <ESC>
-"noremap kj <ESC>
-"inoremap kj <ESC>l
-" nnoremap kj <ESC>
-"vnoremap kj <ESC>
-
 "scroll up and down faster with J and K
 noremap K 5k
 noremap J 5j
@@ -117,15 +111,6 @@ noremap <leader>J J
 
 "easily escape and save from within insert mode
 inoremap ww <ESC>:w<Return>l
-
-"normal text selection in insert mode
-if has("gui_macvim")
-  let macvim_hig_shift_movement = 1
-  "Add hilight to current line only in MacVim
-  au WinLeave * set nocursorline
-  au WinEnter * set cursorline
-  set cursorline
-endif
 
 "format all Tabs
 nnoremap == ggvGb
@@ -139,17 +124,6 @@ cnoremap w!! w !sudo tee % >/dev/null
 "For editing the vimrc more easily:
 nnoremap <leader>ev :vs $MYVIMRC<CR>
 nnoremap <leader>sv :so $MYVIMRC<CR>
-
-"For editing the complaints file more easily:
-nnoremap <leader>ec :vs ~/.vim/complaints.txt<CR> 
-
-"For editing the complaints file more easily:
-nnoremap :todo :vs ~/Dropbox/todo.txt<CR>
-"For accessing the scratchpad file more easily:
-nnoremap <leader>es :e ~/junk/scratchPad.txt<CR> 
-
-"For editing the bashrc file more easily:
-nnoremap <leader>eb :vs ~/.bashrc<CR> 
 
 "colors
 set t_Co=256
@@ -180,25 +154,8 @@ set shortmess=a
 "folding settings
 "set foldmethod=indent   "fold based on indent
 "set foldnestmax=10      "deepest fold is 10 levels
-"set nofoldenable        "dont fold by default
+set nofoldenable        "dont fold by default
 "set foldlevel=1         "this is just what I use
-
-"Relative Line Numbering
-" function! NumberToggle()
-"   if(&relativenumber == 1)
-"     set number
-"   else
-"     set relativenumber
-"   endif
-" endfunc
-" 
-" nnoremap <leader>rl :call NumberToggle()<cr>
-" "Absolute numbering on FocusLost
-" :au FocusLost * :set number
-" :au FocusGained * :set relativenumber
-" "Absolute numbering on Insert Mode
-" autocmd InsertEnter * :set number
-" autocmd InsertLeave * :set relativenumber
 
 "Syntax hilight ejs files as html+js -- edit killed this after i added the vim-jst plugin
 au BufNewFile,BufRead *.ejs set filetype=html
@@ -248,8 +205,6 @@ function! s:VSetSearch()
   let @@ = temp
 endfunction
 
-
-
 "Allow To hilight 5 words at a time
 nnoremap <leader>hh :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
 nnoremap <leader>h1 :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
@@ -270,14 +225,6 @@ nnoremap <c-down> 5<c-w>-
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 
-" Ack for the last search.
-nnoremap <silent> <leader>/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
-
-"Keep hilight when indenting around
-vnoremap > ><CR>gvi
-vnoremap < <<CR>gv
-noremap NN =ip 
-
 "Plugin Configurations
 
 "CtrlP
@@ -286,10 +233,6 @@ let g:ctrlp_working_path_mode = 'c' "index on CWD
 let g:ctrlp_switch_buffer = 'e' " Dont jump to the other buffer if the file is already open
 
 set wildignore+=*.pyc,
-
-"Conque
-map <leader>c :ConqueTermSplit bash
-map <leader>cv :ConqueTermVSplit bash
 
 "NERDTRee
 map <space> :NERDTreeToggle<CR>
@@ -301,9 +244,6 @@ nmap <leader>t :TagbarToggle<CR>
 "EasyMotion triggers:
 map ,, <leader><leader>
 
-"JSBeautify 
-"This plugin is mapped to ,ff to format the current javascript file
-
 "Vim-Powerline
 "let g:Powerline_symbols = 'fancy'
 set encoding=utf-8 " Necessary to show unicode glyphs
@@ -311,11 +251,6 @@ set encoding=utf-8 " Necessary to show unicode glyphs
 "Rename
 ":rename filename
 "to rename the current file
-
-"Ack:
-map :ack :Ack
-map <leader>a :Ack
-" <leader>a<motion>, or 
 
 "vim-seek
 let g:SeekKey = 's'
@@ -326,35 +261,23 @@ if has("gui_running")
     set guioptions=egmrt
 endif
 
-"NarrowRegion
-map :narrow<CR> :NarrowRegion<CR>
-
-" Turn off delimateMate for Clojure files (It's annoying with Clojure)
-au! FileType clojure let b:loaded_delimitMate=1
-
 "Vim-closedform by aaron
 imap <M-;> <Esc>:AppendClosingFormSymbol<CR>a
 nmap <M-;> <Esc>:AppendClosingFormSymbol<CR>
 imap <M-:> <Esc>:AppendAllClosingFormSymbols<CR>a
 nmap <M-:> <Esc>:AppendAllClosingFormSymbols<CR>
 
-"Rainbow Parenthesis
-" au VimEnter * RainbowParenthesesToggle
-" au Syntax * RainbowParenthesesLoadRound
-" au Syntax * RainbowParenthesesLoadSquare
-" au Syntax * RainbowParenthesesLoadBraces
-
-"gitgutter
-highlight clear SignColumn
-set tabstop=4
-set shiftwidth=4
-
-autocmd Filetype python setlocal et ts=2 bs=2 sw=2 softtabstop=2
+autocmd Filetype python setlocal et ts=4 bs=2 sw=4 softtabstop=4
 " syntastic
 let g:syntastic_enable_highlighting = 0
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_mode_map = { 'mode': 'active',
+      \ 'active_filetypes': ['python'],
+      \ 'passive_filetypes': [] }
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_python_checkers = ['pyflake']
+let g:syntastic_tex_checkers = ['lacheck']
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
