@@ -2,6 +2,22 @@ call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype on  " Automatically detect file types.  set nocompatible  " no vi compatibility.
 
+" Add recently accessed projects menu (project plugin)
+set viminfo^=\!
+
+"let terminal resize scale the internal windows
+au VimResized * :wincmd =
+
+" Minibuffer Explorer Settings
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
+" alt+n or alt+p to navigate between entries in QuickFix
+map <silent> <m-p> :cp <cr>
+map <silent> <m-n> :cn <cr>
+
 syntax enable
 
 set cf  " Enable error files & error jumping.
@@ -11,16 +27,30 @@ set autowrite  " Writes on make/shell commands
 set autoread  " reloads upon file change
 set ruler  " Ruler on
 set nu  " Line numbers on
+"set wrap  " Line wrapping off
+"set tw=80 " Set text width
+set cc=85
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
 
+" Formatting
+set ts=4  " Tabs are 2 spaces
+set bs=2  " Backspace over everything in insert mode
+set shiftwidth=4  " Tabs under smart indent
+set softtabstop=4  "
+set nocp incsearch
+set cinoptions=:0,p0,t0
+set cinwords=if,else,while,do,for,switch,case
+set formatoptions=tcqr
 set cindent
-""set autoindent
-""set smarttab
-""set expandtab
+set autoindent
+"set smarttab
+"set expandtab
 
 " Visual
 set showmatch  " Show matching brackets.
 set mat=5  " Bracket blinking.
+set list
+" Show $ at end of line and trailing space as ~
 set lcs=eol:$,tab:\ \ ,trail:~,extends:>,precedes:<
 set novisualbell  " No blinking .
 set noerrorbells  " No noise.
@@ -29,9 +59,16 @@ set laststatus=2  " Always show status line.
 
 " gvim specific
 set mousehide  " Hide mouse after chars typed
+"set mouse=a  " Mouse in all modesc
 set antialias
 
 "Personal Customizations
+
+" Insert the directory of the current buffer in command line mode
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+"leader mappings
+let mapleader = ","
 
 "Make redo easier
 noremap r <c-r>
@@ -39,6 +76,31 @@ noremap r <c-r>
 "Dont lose r's funktionality
 noremap <leader>r r
 
+"So I can copy a whole line without the newline like yy has 
+noremap Y y$  
+
+"So I can duplicate and coment in one keystroke
+vmap gy ygvgcp
+nmap gyy yyPgccj
+
+"map cap h and cap l to beg and end of line=more intuitive
+nnoremap H ^
+nnoremap L $
+noremap HH H
+noremap LL L
+"mm to go to matching
+map m %
+noremap <leader>mm m
+"M go to hilight till the rest of this {} block
+noremap M $v%
+noremap MM ^v%
+"keep M's functionality:
+noremap <leader>M M
+"semicolon as colon
+map ; :
+map :qqq :q!<CR>
+"to keep original semicolon functionality:
+noremap ;; ;
 "scroll up and down faster with J and K
 noremap K 5k
 noremap J 5j
@@ -47,16 +109,31 @@ noremap J 5j
 noremap <leader>K K
 noremap <leader>J J
 
+"easily escape and save from within insert mode
+inoremap ww <ESC>:w<Return>l
+
+"format all Tabs
+nnoremap == ggvGb
+
+"So we can split a line somewhere
+nmap NL i<Return><ESC>
+
+" Sudo to write
+cnoremap w!! w !sudo tee % >/dev/null
+
+"For editing the vimrc more easily:
+nnoremap <leader>ev :vs $MYVIMRC<CR>
+nnoremap <leader>sv :so $MYVIMRC<CR>
+
 "colors
-"set t_Co=256
+set t_Co=256
 "colorscheme vividchalk
-"colorscheme molokai
+colorscheme molokai
 "colorscheme ir_black
 "colorscheme peaksea
 "colorscheme fruity
 "colorscheme morning
 "colorscheme mustang
-"colorscheme solarized
 "other stuff
 set nolist
 set incsearch
@@ -66,11 +143,23 @@ set scrolloff=3 "So the cursor doesnt get lost on the edge
 set wildmode=longest,list
 set nobackup
 set noswapfile
-
 filetype plugin indent on
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
+set gfn=Monaco:h12
+"this is to toggle the smart indent which messes up pasting
+nnoremap <F2> :set invpaste paste?<CR> 
 set pastetoggle=<F2> "F2 toggles paste in insert mode too
 set showmode "show the change to the user
 set shortmess=a
+"folding settings
+"set foldmethod=indent   "fold based on indent
+"set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+"set foldlevel=1         "this is just what I use
+
+"Syntax hilight ejs files as html+js -- edit killed this after i added the vim-jst plugin
+au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.cljs set filetype=clojure
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -92,6 +181,59 @@ map sJ <C-w>J
 map sK <C-w>H
 map sL <C-w>L
 
+"Easy tab navigation 
+map <d-Up> :tabr<cr>
+map <d-Down> :tabl<cr>
+map <d-Left> :tabp<cr>
+map <d-Right> :tabn<cr>
+
+"Easy tab navigation from keyboard too
+map gh :tabp<cr>
+map gl :tabn<cr>
+map gH :tabr<cr>
+map gL :tabl<cr>
+
+"Better Searching
+set hlsearch
+noremap <silent> <leader><space> :noh<cr>:call clearmatches()<cr>
+
+" Visual Mode selection (Press * while selecting something)
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+"Allow To hilight 5 words at a time
+nnoremap <leader>hh :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <leader>h1 :execute 'match InterestingWord1 /\<<c-r><c-w>\>/'<cr>
+nnoremap <leader>h2 :execute '2match InterestingWord2 /\<<c-r><c-w>\>/'<cr>
+nnoremap <leader>h3 :execute '3match InterestingWord3 /\<<c-r><c-w>\>/'<cr>
+
+
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Buffer Window Resizing
+nnoremap <c-right> 5<c-w>>
+nnoremap <c-left> 5<c-w><
+nnoremap <c-up> 5<c-w>+
+nnoremap <c-down> 5<c-w>-
+
+" Open a Quickfix window for the last search.
+nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+
+"Plugin Configurations
+
+"CtrlP
+noremap <space><space> <Esc>:CtrlP .<CR>
+let g:ctrlp_working_path_mode = 'c' "index on CWD
+let g:ctrlp_switch_buffer = 'e' " Dont jump to the other buffer if the file is already open
+
+set wildignore+=*.pyc,
+
 "NERDTRee
 map <space> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
@@ -99,23 +241,47 @@ let NERDTreeIgnore = ['\.pyc$']
 "Tagbar
 nmap <leader>t :TagbarToggle<CR>
 
+"EasyMotion triggers:
+map ,, <leader><leader>
+
 "Vim-Powerline
+"let g:Powerline_symbols = 'fancy'
 set encoding=utf-8 " Necessary to show unicode glyphs
 
-"BSV
-filetype plugin on
-filetype indent on
-let b:verilog_indent_modules = 1
-let b:verilog_indent_width = 3
-let b:verilog_indent_verbose = 1
-set list
-set omnifunc=syntaxcomplete#Complete
+"Rename
+":rename filename
+"to rename the current file
 
-autocmd Filetype bsv 	set et ts=8 bs=2 sw=3 softtabstop=3
-autocmd Filetype c 	set et ts=4 bs=2 sw=4 softtabstop=4
-autocmd Filetype cpp 	set et ts=4 bs=2 sw=4 softtabstop=4
-autocmd Filetype python set et ts=4 bs=2 sw=4 softtabstop=4
-autocmd FileType yaml 	set et ts=4 bs=2 sw=4 softtabstop=4
-autocmd FileType tcl 	set et ts=4 bs=2 sw=4 softtabstop=4
-autocmd FileType make 	set noexpandtab shiftwidth=4 softtabstop=0
-"
+"vim-seek
+let g:SeekKey = 's'
+let g:SeekBackKey = 'S'
+
+if has("gui_running")
+    set guifont=Monaco\ for\ Powerline:h13
+    set guioptions=egmrt
+endif
+
+"Vim-closedform by aaron
+imap <M-;> <Esc>:AppendClosingFormSymbol<CR>a
+nmap <M-;> <Esc>:AppendClosingFormSymbol<CR>
+imap <M-:> <Esc>:AppendAllClosingFormSymbols<CR>a
+nmap <M-:> <Esc>:AppendAllClosingFormSymbols<CR>
+
+autocmd Filetype python setlocal et ts=4 bs=2 sw=4 softtabstop=4
+" syntastic
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_mode_map = { 'mode': 'active',
+      \ 'active_filetypes': ['python'],
+      \ 'passive_filetypes': [] }
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_python_checkers = ['pyflake']
+let g:syntastic_tex_checkers = ['lacheck']
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
